@@ -1,0 +1,17 @@
+services:
+
+  api-gateway:
+    container_name: Api-Gateway
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8765:8765"
+    environment:
+      SPRING_PROFILES_ACTIVE: docker
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8765/actuator/health" ]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
