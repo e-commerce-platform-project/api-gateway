@@ -2,17 +2,17 @@ spring:
   application:
     name: api-gateway
 
-  security:
-    oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: api-gateway
-            client-secret:
-            scope: openid,profile,email
-        provider:
-          keycloak:
-            issuer-uri: http:localhost:8080/auth/realms/my-realm
+#  security:
+#    oauth2:
+#      client:
+#        registration:
+#          keycloak:
+#            client-id: api-gateway
+#            client-secret:
+#            scope: openid,profile,email
+#        provider:
+#          keycloak:
+#            issuer-uri: http:localhost:8080/auth/realms/my-realm
 
   cloud:
     gateway:
