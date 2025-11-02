@@ -1,6 +1,13 @@
 spring:
+
   application:
     name: api-gateway
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/auth/realms/ecommerce-platform-project
 
   cloud:
     gateway:
@@ -10,7 +17,7 @@ spring:
             cors-configurations:
               '[/**]':
                 allowed-origin-patterns:
-                  -  "*"
+                  - "*"
                 allowed-methods:
                   - GET
                   - POST
@@ -18,8 +25,8 @@ spring:
                   - DELETE
                   - OPTIONS
                   - PATCH
-                allowed-headers: "*"
-                max-age: 3600
+                allowed-headers:
+                  - "*"
           discovery:
             locator:
               enabled: true
@@ -30,12 +37,16 @@ spring:
                 - Path=/products/**
               filters:
                 - PrefixPath=/api/v1
+
+
             - id: cart-service-route
               uri: lb://cart-service
               predicates:
                 - Path=/carts/**
               filters:
                 - PrefixPath=/api/v1
+
+
             - id: auth-service-route
               uri: lb://auth-service
               predicates:
@@ -43,12 +54,14 @@ spring:
               filters:
                 - PrefixPath=/api/v1
 
-            - id: user-service-route
+
+            - id: user-service-protected
               uri: lb://user-service
               predicates:
                 - Path=/users/**
               filters:
                 - PrefixPath=/api/v1
+
 
             - id: seller-service-route
               uri: lb://seller-service
@@ -59,7 +72,7 @@ spring:
 
 server:
   port: 8765
-  forward-headers-strategy: framework
+#  forward-headers-strategy: framework
 
 eureka:
   client:
